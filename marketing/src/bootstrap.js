@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import App from './App';
 
 /* 1. Create a mount function to start up the app */
 
@@ -10,8 +11,9 @@ import ReactDom from 'react-dom';
  * @param el HTMLElement
  */
 const mount = (el) => {
+    // Render the app-component as our root element
     ReactDom.render(
-        <h1>Hi There</h1>,
+        <App/>,
         el
     )
 }
