@@ -15,6 +15,9 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
  */
 const commonConfig = require('./webpack.common');
 
+/** We import the package.json */
+const packageJson = require('../package.json');
+
 /**
  * This is our development configuration, we want to merge into the other config.
  */
@@ -43,8 +46,12 @@ const devConfig = {
                  */
                 marketing: 'marketing@http://localhost:8081/remoteEntry.js'
             },
-            // We want to share react and react-dom, so that it doesn't get loaded twice.
-            shared: ['react', 'react-dom'],
+            /**
+             * We share all dependencies of our package.json.
+             * So when we add a new dependency, we share it automatically
+             * The plugin accepts a list of strings and a key-value pair object.
+             */
+            shared: packageJson.dependencies,
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html'

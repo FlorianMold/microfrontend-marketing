@@ -15,6 +15,8 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
  */
 const commonConfig = require('./webpack.common');
 
+const packageJson = require('../package.json');
+
 /**
  * This is our development configuration, we want to merge into the other config.
  */
@@ -43,7 +45,7 @@ const devConfig = {
             exposes: {
                 './MarketingApp': './src/bootstrap'
             },
-            shared: ['react', 'react-dom'],
+            shared: packageJson.dependencies
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html'
