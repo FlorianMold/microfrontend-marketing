@@ -42,7 +42,9 @@ const devConfig = {
                  * The name before the @, must match the name inside the marketing webpack config
                  */
                 marketing: 'marketing@http://localhost:8081/remoteEntry.js'
-            }
+            },
+            // We want to share react and react-dom, so that it doesn't get loaded twice.
+            shared: ['react', 'react-dom'],
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html'
