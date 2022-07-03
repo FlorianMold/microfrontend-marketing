@@ -8,6 +8,8 @@ const {merge} = require('webpack-merge');
  */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
 /**
  * We import our common-config from the package.
  */
@@ -25,6 +27,23 @@ const devConfig = {
         }
     },
     plugins: [
+        new ModuleFederationPlugin({
+            /**
+             * The name of our project.
+             * Remember that the plugin will create a global variable with the name marketing,
+             * so no div should be called like this.
+             *
+             */
+            name: 'marketing',
+            filename: 'remoteEntry.js',
+            /**
+             * We expose the src/bootstrap under Marketing
+             * We export boostrap, because the mount function is exported there.
+             */
+            exposes: {
+                './MarketingApp': './src/bootstrap'
+            },
+        }),
         new HtmlWebpackPlugin({
             template: './public/index.html'
         })

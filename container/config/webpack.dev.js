@@ -8,6 +8,8 @@ const {merge} = require('webpack-merge');
  */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
 /**
  * We import our common-config from the package.
  */
@@ -25,6 +27,23 @@ const devConfig = {
         }
     },
     plugins: [
+        new ModuleFederationPlugin({
+            /**
+             * The name for the host actually never gets used, but it is good practice to set it up
+             */
+            name: 'container',
+            /**
+             * A collection of key-value pairs.
+             * The keys are the names of the different modules, which we want to import.
+             * The values where the remoteEntry file can be found for the module.
+             */
+            remotes: {
+                /**
+                 * The name before the @, must match the name inside the marketing webpack config
+                 */
+                marketing: 'marketing@http://localhost:8081/remoteEntry.js'
+            }
+        }),
         new HtmlWebpackPlugin({
             template: './public/index.html'
         })
