@@ -1,1 +1,1 @@
-console.log('HI There');
+import('./bootstrap');
