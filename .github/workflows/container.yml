@@ -27,7 +27,7 @@ jobs:
       - run: npm run build
 
       # Use the aws sdk
-      - uses: hinyinc/action-aws-cli@v1.2
+      - uses: shinyinc/action-aws-cli@v1.2
       # Sync our dist directory with s3 bucket (ENV variable)
       - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
         env:
