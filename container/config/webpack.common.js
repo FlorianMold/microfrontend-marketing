@@ -1,3 +1,8 @@
+/**
+ * Takes the html of our project and inject some different script tags inside of it.
+ */
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     module: {
         rules: [
@@ -22,5 +27,10 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html'
+        })
+    ]
 }

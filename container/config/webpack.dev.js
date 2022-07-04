@@ -3,10 +3,6 @@
  * With merge everything that is in the common file into this development file.
  */
 const {merge} = require('webpack-merge');
-/**
- * Takes the html of our project and inject some different script tags inside of it.
- */
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
@@ -53,9 +49,6 @@ const devConfig = {
              */
             shared: packageJson.dependencies,
         }),
-        new HtmlWebpackPlugin({
-            template: './public/index.html'
-        })
     ]
 }
 /**
