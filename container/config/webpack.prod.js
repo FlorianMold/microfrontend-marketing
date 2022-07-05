@@ -18,7 +18,16 @@ const prodConfig = {
          * When we build files for production, they will use this filename as template
          * The content-hash is for resolving caching issues.
          */
-        filename: '[name].[contenthash].js'
+        filename: '[name].[contenthash].js',
+        /**
+         * This option is set very often in micro-frontend architectures.
+         * This option is needed, when we want to refer to a file, which has been built by webpack.
+         * Whenever our html-file wants to refer to the javascript file, which has been created.
+         * Without the publicPath config it refers to the filename directly.
+         *
+         * Now whenever, the html-plugin prepends all files with the public-path.
+         */
+        publicPath: '/container/latest/'
     },
     plugins: [
         new ModuleFederationPlugin({
