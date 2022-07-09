@@ -23,12 +23,18 @@ const packageJson = require('../package.json');
 const devConfig = {
     mode: 'development',
     output: {
-        publicPath: 'http://localhost:8082/'
+        publicPath: 'http://localhost:8083/'
     },
     devServer: {
-        port: 8082,
+        port: 8083,
         historyApiFallback: {
             index: '/index.html'
+        },
+        /**
+         * This allows us to load some fonts, when we load it up through our container.
+         */
+        headers: {
+            'Access-Control-Allow-Origin': '*'
         }
     },
     plugins: [
@@ -39,14 +45,14 @@ const devConfig = {
              * so no div should be called like this.
              *
              */
-            name: 'auth',
+            name: 'dashboard',
             filename: 'remoteEntry.js',
             /**
              * We expose the src/bootstrap under Marketing
              * We export boostrap, because the mount function is exported there.
              */
             exposes: {
-                './AuthApp': './src/bootstrap'
+                './DasboardApp': './src/bootstrap'
             },
             shared: packageJson.dependencies
         }),

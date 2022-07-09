@@ -8,14 +8,14 @@ const prodConfig = {
     output: {
         filename: '[name].[contenthash].js',
         // Set the public path to the correct folder in the s3 bucket
-        publicPath: '/auth/latest/'
+        publicPath: '/dashboard/latest/'
     },
     plugins: [
         new ModuleFederationPlugin({
-            name: 'auth',
+            name: 'dashboard',
             filename: 'remoteEntry.js',
             exposes: {
-                './AuthApp': './src/bootstrap'
+                './DashboardApp': './src/bootstrap'
             },
             shared: packageJson.dependencies
         })
