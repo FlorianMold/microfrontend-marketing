@@ -34,6 +34,24 @@ const mount = (el, {onNavigate}) => {
         <App history={history}/>,
         el
     )
+
+    return {
+        /**
+         * Anytime a parent navigate, the container does some kind of navigation this is executed.
+         *
+         * This function is executed in the container within the history.listen function.
+         */
+        onParentNavigate({pathname: nextPathname}) {
+            const {pathname} = history;
+
+            /**
+             * Check that the current pathname and the pathname we want to navigate to are different.
+             */
+            if (pathname !== nextPathname) {
+                history.push(nextPathname);
+            }
+        }
+    }
 }
 
 // 2. Check if we are in development and in isolation, call mount immediately

@@ -22,7 +22,7 @@ export default () => {
     // The useEffect makes sure, that we can run the code only one time, when the component is being created.
     useEffect(() => {
         // Mount takes the reference of the div and tries to create the marketing app.
-        mount(ref.current, {
+        const {onParentNavigate} = mount(ref.current, {
             // We pass a callback, that is executed by the marketing app, when navigation takes place.
             // The location is what is communicated from the marketing-router to the container.
             // pathname is the path, where the marketing app navigates to.
@@ -37,7 +37,14 @@ export default () => {
                     history.push(nextPathname);
                 }
             }
-        });
+        }, []);
+
+        /**
+         * The browser-history has the same methods as memory-history.
+         * So we listen here to navigation on the container app and call the function from the marketing app,
+         * when the navigation of the container changes.
+         */
+        history.listen(onParentNavigate)
     });
 
     return <div ref={ref}></div>;
