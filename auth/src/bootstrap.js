@@ -16,7 +16,7 @@ import {createMemoryHistory, createBrowserHistory} from 'history';
  * @param defaultHistory The default history for the browser, otherwise memory history is used.
  * @param initialPath The initial path, where the application was loaded.
  */
-const mount = (el, {onNavigate, defaultHistory, initialPath}) => {
+const mount = (el, {onNavigate, onSignIn, defaultHistory, initialPath, }) => {
     // Create a memory-history for the react-router.
     const history = defaultHistory || createMemoryHistory({
         /** Here we set the initial path for memory-history. */
@@ -36,7 +36,7 @@ const mount = (el, {onNavigate, defaultHistory, initialPath}) => {
 
     // Render the app-component as our root element
     ReactDom.render(
-        <App history={history}/>,
+        <App history={history} onSignIn={onSignIn}/>,
         el
     )
 

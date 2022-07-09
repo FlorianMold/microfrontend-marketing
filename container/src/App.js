@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useState} from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 /** A wrapper that creates our marketing app and renders it into the marketing app. */
 // import MarketingApp from './components/MarketingApp';
@@ -29,14 +29,20 @@ const generateClassName = createGenerateClassName({
  */
 
 export default () => {
+    /** By default the user is not signed in. */
+    const [isSignedIn, setIsSignedIn] = useState(false);
+
     return (
         <StylesProvider generateClassName={generateClassName}>
             <BrowserRouter>
                 <div>
-                    <Header/>
+                    <Header isSignedIn={isSignedIn} />
                     <Suspense fallback={<Progress/>}>
                         <Switch>
-                            <Route path="/auth" component={AuthLazy}/>
+                            <Route path="/auth">
+                                {/* When the callback is executed, sign-in is always true */}
+                                <AuthLazy onSignIn={() => setIsSignedIn(true)} />
+                            </Route>
                             <Route path="/" component={MarketingLazy}/>
                         </Switch>
                     </Suspense>

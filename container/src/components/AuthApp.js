@@ -15,7 +15,11 @@ import {useHistory} from "react-router-dom";
 // With useRef we can create a reference to an HTML-Element.
 // This is where we want to render our marketing element into.
 
-export default () => {
+/**
+ *
+ * @param onSignIn Function that is executed, when the user has signed in.
+ */
+export default ({onSignIn}) => {
     /** This is the reference to the html-element displayed on the screen. */
     const ref = useRef(null);
     /** A copy of the browser-history used in our container. */
@@ -25,6 +29,8 @@ export default () => {
     useEffect(() => {
         // Mount takes the reference of the div and tries to create the marketing app.
         const {onParentNavigate} = mount(ref.current, {
+            /** The initial path should be our initial path and history.location is the current path. */
+            initialPath: history.location.pathname,
             // We pass a callback, that is executed by the marketing app, when navigation takes place.
             // The location is what is communicated from the marketing-router to the container.
             // pathname is the path, where the marketing app navigates to.
@@ -39,8 +45,7 @@ export default () => {
                     history.push(nextPathname);
                 }
             },
-            /** The initial path should be our initial path and history.location is the current path. */
-            initialPath: history.location.pathname
+            onSignIn
         });
 
         /**
