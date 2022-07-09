@@ -44,7 +44,8 @@ const devConfig = {
                  * The name before the @, must match the name inside the marketing webpack config
                  */
                 marketing: 'marketing@http://localhost:8081/remoteEntry.js',
-                auth: 'auth@http://localhost:8082/remoteEntry.js'
+                auth: 'auth@http://localhost:8082/remoteEntry.js',
+                dashboard: 'dashboard@http://localhost:8083/remoteEntry.js',
             },
             /**
              * We share all dependencies of our package.json.

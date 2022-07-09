@@ -13,6 +13,7 @@ import {createGenerateClassName, StylesProvider} from "@material-ui/core/styles"
  */
 const MarketingLazy = lazy(() => import('./components/MarketingApp'));
 const AuthLazy = lazy(() => import('./components/AuthApp'));
+const DashboardLazy = lazy(() => import('./components/DashboardApp'));
 
 /**
  * Instead of prefixing our production classes with jss we prefix our
@@ -43,6 +44,8 @@ export default () => {
                                 {/* When the callback is executed, sign-in is always true */}
                                 <AuthLazy onSignIn={() => setIsSignedIn(true)}/>
                             </Route>
+                            {/* It is important that the route is here, otherwise the last route would catch all. */}
+                            <Route path="/dashboard" component={DashboardLazy}></Route>
                             <Route path="/" component={MarketingLazy}/>
                         </Switch>
                     </Suspense>

@@ -37,7 +37,8 @@ const prodConfig = {
                 // We assume that the remoteEntry.js of marketing is located under /marketing/latest/
                 marketing: `marketing@${domain}/marketing/latest/remoteEntry.js`,
                 // We assume that the remoteEntry.js of auth is located under /auth/latest/
-                auth: `auth@${domain}/auth/latest/remoteEntry.js`
+                auth: `auth@${domain}/auth/latest/remoteEntry.js`,
+                dashboard: `auth@${domain}/dashboard/latest/remoteEntry.js`,
             },
             shared: packageJson.dependencies
         })
