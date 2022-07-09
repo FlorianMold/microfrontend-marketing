@@ -14,6 +14,11 @@ const generateClassName = createGenerateClassName({
     productionPrefix: 'co'
 });
 
+/**
+ * The browser router is provided to us, by the react-router-dom. It creates a browser-history object for us.
+ * The browser router uses the browser-history.ß
+ */
+
 export default () => {
     return (
         <StylesProvider generateClassName={generateClassName}>

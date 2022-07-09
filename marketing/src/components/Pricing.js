@@ -155,7 +155,7 @@ export default function Pricing() {
         >
           Pricing
         </Typography>
-        <Typography
+        <Typograbphy
           variant="h5"
           align="center"
           color="textSecondary"
@@ -164,7 +164,7 @@ export default function Pricing() {
           Quickly build an effective pricing table for your potential customers
           with this layout. It&apos;s built with default Material-UI components
           with little customization.
-        </Typography>
+        </Typograbphy>
       </Container>
       {/* End hero unit */}
       <Container maxWidth="md" component="main">

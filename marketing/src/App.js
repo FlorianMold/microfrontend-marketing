@@ -10,7 +10,7 @@ import Pricing from "./components/Pricing";
  * production classes with ma
  */
 const generateClassName = createGenerateClassName({
-    // The prefix we want to use in production
+    // The prefix we want to use in production, so that we have a unique prefix.
     productionPrefix: 'ma'
 });
 
