@@ -36,8 +36,10 @@ export default () => {
                     /** This means, that we want to navigate to the given path-name. */
                     history.push(nextPathname);
                 }
-            }
-        }, []);
+            },
+            /** The initial path should be our initial path and history.location is the current path. */
+            initialPath: history.location.pathname
+        });
 
         /**
          * The browser-history has the same methods as memory-history.
@@ -45,7 +47,7 @@ export default () => {
          * when the navigation of the container changes.
          */
         history.listen(onParentNavigate)
-    });
+    }, []);
 
     return <div ref={ref}></div>;
 }

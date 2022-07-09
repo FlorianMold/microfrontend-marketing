@@ -14,10 +14,14 @@ import {createMemoryHistory, createBrowserHistory} from 'history';
  * @param onNavigate Callback that should be executed, when the app has navigated. So
  * we have to make to call the onNavigate function, when navigation happens.
  * @param defaultHistory The default history for the browser, otherwise memory history is used.
+ * @param initialPath The initial path, where the application was loaded.
  */
-const mount = (el, {onNavigate, defaultHistory}) => {
+const mount = (el, {onNavigate, defaultHistory, initialPath}) => {
     // Create a memory-history for the react-router.
-    const history = defaultHistory || createMemoryHistory();
+    const history = defaultHistory || createMemoryHistory({
+        /** Here we set the initial path for memory-history. */
+        initialEntries: [initialPath]
+    });
 
     /**
      * The history object has a listener, whenever navigation occurs.
