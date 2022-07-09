@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './App';
+import {createMemoryHistory} from 'history';
+
 
 /* 1. Create a mount function to start up the app */
 
@@ -11,9 +13,12 @@ import App from './App';
  * @param el HTMLElement
  */
 const mount = (el) => {
+    // Create a memory-history for the react-router.
+    const history = createMemoryHistory();
+
     // Render the app-component as our root element
     ReactDom.render(
-        <App/>,
+        <App history={history}/>,
         el
     )
 }
