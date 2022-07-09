@@ -52,7 +52,7 @@ const devConfig = {
              * We export boostrap, because the mount function is exported there.
              */
             exposes: {
-                './DasboardApp': './src/bootstrap'
+                './DashboardApp': './src/bootstrap'
             },
             shared: packageJson.dependencies
         }),

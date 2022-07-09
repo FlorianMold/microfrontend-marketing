@@ -1,7 +1,5 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-import App from './App';
-import {createMemoryHistory, createBrowserHistory} from 'history';
+import {createApp} from "vue";
+import Dashboard from "./components/Dashboard.vue";
 
 
 /* 1. Create a mount function to start up the app */
@@ -10,53 +8,15 @@ import {createMemoryHistory, createBrowserHistory} from 'history';
  * We assume that this function is called with a html-element
  * and the app is rendered into the element.
  *
- * @param el HTMLElement, where the element should be rendered
- * @param onNavigate Callback that should be executed, when the app has navigated. So
- * we have to make to call the onNavigate function, when navigation happens.
- * @param defaultHistory The default history for the browser, otherwise memory history is used.
- * @param initialPath The initial path, where the application was loaded.
+ * @param el HTMLElement, where the app should be rendered
  */
-const mount = (el, {onNavigate, onSignIn, defaultHistory, initialPath, }) => {
-    // Create a memory-history for the react-router.
-    const history = defaultHistory || createMemoryHistory({
-        /** Here we set the initial path for memory-history. */
-        initialEntries: [initialPath]
-    });
-
+const mount = (el) => {
+    const app = createApp(Dashboard);
     /**
-     * The history object has a listener, whenever navigation occurs.
-     * We pass our onNavigate function, which is later executed, when the navigation of
-     * the application changes.
-     *
-     * After the history is changed, the callback is executed.
+     * This mount function is not related to our mount function.
+     * It just tells vue, where to create the application.
      */
-    if (onNavigate) {
-        history.listen(onNavigate);
-    }
-
-    // Render the app-component as our root element
-    ReactDom.render(
-        <App history={history} onSignIn={onSignIn}/>,
-        el
-    )
-
-    return {
-        /**
-         * Anytime a parent navigate, the container does some kind of navigation this is executed.
-         *
-         * This function is executed in the container within the history.listen function.
-         */
-        onParentNavigate({pathname: nextPathname}) {
-            const {pathname} = history;
-
-            /**
-             * Check that the current pathname and the pathname we want to navigate to are different.
-             */
-            if (pathname !== nextPathname) {
-                history.push(nextPathname);
-            }
-        }
-    }
+    app.mount(el);
 }
 
 // 2. Check if we are in development and in isolation, call mount immediately
@@ -66,11 +26,11 @@ const mount = (el, {onNavigate, onSignIn, defaultHistory, initialPath, }) => {
  */
 if (process.env.NODE_ENV === 'development') {
     /* We look for the element, which is only present in the auth app and not in the container app. */
-    const devRoot = document.querySelector('#_auth-dev-root');
+    const devRoot = document.querySelector('#_dashboard-dev-root');
 
     /** When the element is found. */
     if (devRoot) {
-        mount(devRoot, {defaultHistory: createBrowserHistory()})
+        mount(devRoot)
     }
 }
 
