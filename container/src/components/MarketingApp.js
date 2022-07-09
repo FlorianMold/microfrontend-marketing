@@ -19,7 +19,12 @@ export default () => {
     // The useEffect makes sure, that we can run the code only one time, when the component is being created.
     useEffect(() => {
         // Mount takes the reference of the div and tries to create the marketing app.
-        mount(ref.current);
+        mount(ref.current, {
+            // We pass a callback as well, that is executed by the marketing app, when navigation takes place.
+            onNavigate: () => {
+                console.log('The container noticed navigation in Marketing');
+            }
+        });
     });
 
     return <div ref={ref}></div>;

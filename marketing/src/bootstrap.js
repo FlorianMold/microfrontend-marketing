@@ -10,11 +10,22 @@ import {createMemoryHistory} from 'history';
  * We assume that this function is called with a html-element
  * and the app is rendered into the element.
  *
- * @param el HTMLElement
+ * @param el HTMLElement, where the element should be rendered
+ * @param onNavigate Callback that should be executed, when the app has navigated. So
+ * we have to make to call the onNavigate function, when navigation happens.
  */
-const mount = (el) => {
+const mount = (el, {onNavigate}) => {
     // Create a memory-history for the react-router.
     const history = createMemoryHistory();
+
+    /**
+     * The history object has a listener, whenever navigation occurs.
+     * We pass our onNavigate function, which is later executed, when the navigation of
+     * the application changes.
+     *
+     * After the history is changed, the callback is executed.
+     */
+    history.listen(onNavigate);
 
     // Render the app-component as our root element
     ReactDom.render(
