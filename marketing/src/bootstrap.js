@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './App';
-import {createMemoryHistory} from 'history';
+import {createMemoryHistory, createBrowserHistory} from 'history';
 
 
 /* 1. Create a mount function to start up the app */
@@ -13,10 +13,11 @@ import {createMemoryHistory} from 'history';
  * @param el HTMLElement, where the element should be rendered
  * @param onNavigate Callback that should be executed, when the app has navigated. So
  * we have to make to call the onNavigate function, when navigation happens.
+ * @param defaultHistory The default history for the browser, otherwise memory history is used.
  */
-const mount = (el, {onNavigate}) => {
+const mount = (el, {onNavigate, defaultHistory}) => {
     // Create a memory-history for the react-router.
-    const history = createMemoryHistory();
+    const history = defaultHistory || createMemoryHistory();
 
     /**
      * The history object has a listener, whenever navigation occurs.
@@ -65,7 +66,7 @@ if (process.env.NODE_ENV === 'development') {
 
     /** When the element is found. */
     if (devRoot) {
-        mount(devRoot, {})
+        mount(devRoot, {defaultHistory: createBrowserHistory()})
     }
 }
 
