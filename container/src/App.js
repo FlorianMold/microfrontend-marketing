@@ -1,11 +1,13 @@
-import React, {lazy, Suspense, useState} from 'react';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import React, {lazy, Suspense, useState, useEffect} from 'react';
+import {Router, Route, Switch, Redirect} from "react-router-dom";
+import {createGenerateClassName, StylesProvider} from "@material-ui/core/styles";
+import {createBrowserHistory} from 'history';
+
 /** A wrapper that creates our marketing app and renders it into the marketing app. */
 // import MarketingApp from './components/MarketingApp';
 // import AuthApp from './components/AuthApp';
 import Header from './components/Header';
 import Progress from './components/Progress';
-import {createGenerateClassName, StylesProvider} from "@material-ui/core/styles";
 
 /**
  * This kind of definition makes sure, that we only load the marketing-app, when we want to show it on the screen.
@@ -29,13 +31,25 @@ const generateClassName = createGenerateClassName({
  * The browser router uses the browser-history.ß
  */
 
+const history = createBrowserHistory();
+
 export default () => {
     /** By default the user is not signed in. */
     const [isSignedIn, setIsSignedIn] = useState(false);
 
+    /**
+     * This function is run, when the value of isSignedIn changes.
+     */
+    useEffect(() => {
+        // Sign-in is changed and true
+        if (isSignedIn) {
+            history.push('./dashboard')
+        }
+    }, [isSignedIn])
+
     return (
         <StylesProvider generateClassName={generateClassName}>
-            <BrowserRouter>
+            <Router history={history}>
                 <div>
                     <Header isSignedIn={isSignedIn} onSignOut={() => setIsSignedIn(false)}/>
                     <Suspense fallback={<Progress/>}>
@@ -45,12 +59,16 @@ export default () => {
                                 <AuthLazy onSignIn={() => setIsSignedIn(true)}/>
                             </Route>
                             {/* It is important that the route is here, otherwise the last route would catch all. */}
-                            <Route path="/dashboard" component={DashboardLazy}></Route>
+                            <Route path="/dashboard">
+                                {/* If the user is not signed in, redirect to landing page. */}
+                                {!isSignedIn && <Redirect to="/"/>}
+                                <DashboardLazy/>
+                            </Route>
                             <Route path="/" component={MarketingLazy}/>
                         </Switch>
                     </Suspense>
                 </div>
-            </BrowserRouter>
+            </Router>
         </StylesProvider>
     )
 }
