@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 // import MarketingApp from './components/MarketingApp';
 // import AuthApp from './components/AuthApp';
 import Header from './components/Header';
+import Progress from './components/Progress';
 import {createGenerateClassName, StylesProvider} from "@material-ui/core/styles";
 
 /**
@@ -33,7 +34,7 @@ export default () => {
             <BrowserRouter>
                 <div>
                     <Header/>
-                    <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<Progress/>}>
                         <Switch>
                             <Route path="/auth" component={AuthLazy}/>
                             <Route path="/" component={MarketingLazy}/>
