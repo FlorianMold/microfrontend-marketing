@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 /** A wrapper that creates our marketing app and renders it into the marketing app. */
-import MarketingApp from './components/MarketingApp';
-import AuthApp from './components/AuthApp';
+// import MarketingApp from './components/MarketingApp';
+// import AuthApp from './components/AuthApp';
 import Header from './components/Header';
 import {createGenerateClassName, StylesProvider} from "@material-ui/core/styles";
+
+/**
+ * This kind of definition makes sure, that we only load the marketing-app, when we want to show it on the screen.
+ * The result of lazy is a react-component, so we can easily display it.
+ */
+const MarketingLazy = lazy(() => import('./components/MarketingApp'));
+const AuthLazy = lazy(() => import('./components/AuthApp'));
 
 /**
  * Instead of prefixing our production classes with jss we prefix our
@@ -26,11 +33,12 @@ export default () => {
             <BrowserRouter>
                 <div>
                     <Header/>
-                    {/* Render the marketing micro-frontend */}
-                    <Switch>
-                        <Route path="/auth" component={AuthApp} />
-                        <Route path="/" component={MarketingApp} />
-                    </Switch>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Switch>
+                            <Route path="/auth" component={AuthLazy}/>
+                            <Route path="/" component={MarketingLazy}/>
+                        </Switch>
+                    </Suspense>
                 </div>
             </BrowserRouter>
         </StylesProvider>

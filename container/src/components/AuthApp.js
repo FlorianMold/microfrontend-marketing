@@ -5,6 +5,8 @@
  * 'marketing' is the name, which we specified inside the remotes array inside the webpack-config.
  * '/MarketingApp' is exposed inside the marketing webpack-config and loads the bootstrap file of the marketing application.
  * The keys of the exposes object in the marketing webpack-config is available to us.
+ *
+ * This import statement means that we load the remoteEntry.js file.
  */
 import {mount} from 'auth/AuthApp';
 import React, {useRef, useEffect} from 'react';
