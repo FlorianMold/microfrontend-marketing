@@ -1,0 +1,45 @@
+# The name of the workflow.
+name: deploy-dashboard
+
+# When do we want to run this workflow
+on:
+  # We want to run this workflow, when a push happens on main-branch
+  push:
+    branches:
+      - main
+    # Only run this workflow, when we change something in the container directory
+    paths:
+      - 'dashboard/**'
+
+defaults:
+  run:
+    # Set our working-directory to container
+    # All commands are executed inside the container directory
+    working-directory: 'dashboard'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout our code
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm run build
+        env:
+          # Make the production domain available as environment variable to the build
+          PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+
+      # Use the aws sdk
+      - uses: shinyinc/action-aws-cli@v1.2
+      # Sync our dist directory with s3 bucket (ENV variable)
+      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/dashboard/latest
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-east-1"
+      # Automatically set up the invalidation, when we deploy our code.
+      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths "/dashboard/latest/remoteEntry.js"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-east-1"

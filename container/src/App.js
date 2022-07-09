@@ -43,6 +43,7 @@ export default () => {
     useEffect(() => {
         // Sign-in is changed and true
         if (isSignedIn) {
+            // Go to the dashboard after sign-in.
             history.push('./dashboard')
         }
     }, [isSignedIn])
