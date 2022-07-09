@@ -25,7 +25,9 @@ const mount = (el, {onNavigate}) => {
      *
      * After the history is changed, the callback is executed.
      */
-    history.listen(onNavigate);
+    if (onNavigate) {
+        history.listen(onNavigate);
+    }
 
     // Render the app-component as our root element
     ReactDom.render(
@@ -45,7 +47,7 @@ if (process.env.NODE_ENV === 'development') {
 
     /** When the element is found. */
     if (devRoot) {
-        mount(devRoot)
+        mount(devRoot, {})
     }
 }
 
